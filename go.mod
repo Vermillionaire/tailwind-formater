@@ -1,3 +1,3 @@
-module github.com/vermilllionaire/tailwind-formatter
+module github.com/vermillionaire/tailwind-formatter
 
 go 1.21.0
