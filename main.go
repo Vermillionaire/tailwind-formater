@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-var regCSS = `}[\n ]*\.(?P<class>[\\\w:-]*)\s*{`
+var regCSS = `[}(\n\s]\.(?P<class>[\\\/\w:-]*)`
 var regClass = `class=".*"`
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 
 	sufixes := []string{
 		":hover",
-		":odd",
+		":nth-child",
 		":after",
 		":before",
 	}
