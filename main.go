@@ -15,7 +15,7 @@ import (
 )
 
 var regCSS = `[}(\n\s]\.(?P<class>[\\\/\w:-]*)`
-var regClass = `class=".*"`
+var regClass = `class=".*" +`
 
 func main() {
 
@@ -74,8 +74,8 @@ func main() {
 		}
 
 		replaced := r.ReplaceAllStringFunc(buf.String(), func(value string) string {
-			value = value[7 : len(value)-1]
-			classes := strings.Split(value, " ")
+			split := strings.Split(value, `"`)
+			classes := strings.Split(strings.Trim(split[1], " "), " ")
 
 			sort.Slice(classes, func(i, j int) bool {
 
@@ -91,9 +91,12 @@ func main() {
 
 			sorted := strings.Join(classes, " ")
 
-			fmt.Println(value)
-			fmt.Println(sorted)
-			return fmt.Sprintf("class=\"%s\"", sorted)
+			sufix := ""
+			if string(value[len(value)-1:][0]) == " " {
+				sufix = " "
+			}
+
+			return fmt.Sprintf("class=\"%s\"%s", sorted, sufix)
 		})
 
 		_, err = f.Seek(0, 0)
